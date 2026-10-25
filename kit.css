@@ -1,0 +1,96 @@
+/*
+ * @aaarianme/ui — the kit's CSS classes, the ones its components are drawn with. Imported first in
+ * an app's index.css, before the @tailwind directives:
+ *
+ *   @import "@aaarianme/ui/kit.css";
+ *
+ * The page's base (font, colours, headings), the kit's classes, phone fields and scrollbars. The
+ * classes are in Tailwind's components layer, so the app's own @layer components comes after them:
+ * a class it defines again (`.brand-gradient`, its own brand) wins.
+ */
+@layer base {
+  html {
+    font-family:
+      -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+      "Helvetica Neue", "Inter", system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100;
+    letter-spacing: -0.011em;
+  }
+  /* Tighter tracking on large display text, the way SF Pro Display is set. */
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.021em;
+  }
+}
+
+@layer components {
+  /* Soft, rounded surface with a hairline border and gentle elevation. */
+  .card {
+    @apply rounded-2xl border border-black/[0.07] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_12px_28px_-16px_rgba(0,0,0,0.18)]
+      dark:border-white/[0.08] dark:bg-slate-900 dark:shadow-[0_1px_2px_rgba(0,0,0,0.4)];
+  }
+  .input {
+    @apply w-full rounded-xl border border-black/[0.1] bg-white px-3.5 py-2 text-sm outline-none transition placeholder:text-slate-400
+      focus:border-brand-500 focus:ring-4 focus:ring-brand-500/15
+      dark:border-white/[0.12] dark:bg-slate-800 dark:text-slate-100 dark:focus:border-brand-400;
+  }
+  /* Frosted chrome: a bar or panel over what scrolls under it. */
+  .glass {
+    @apply border-black/[0.07] bg-white/70 backdrop-blur-xl backdrop-saturate-150 dark:border-white/[0.08] dark:bg-black/60;
+  }
+  /* The segmented control (Tabs "native", design.md 8.4): a grey track, the chosen segment on a
+     raised thumb that slides to it. */
+  .segmented {
+    @apply relative inline-flex items-center rounded-[10px] bg-slate-500/[0.12] p-0.5 dark:bg-white/[0.08];
+  }
+  .segment {
+    @apply relative z-[1] inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 text-[13px] font-medium text-slate-600 transition-colors
+      hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/50 touch:py-1.5 dark:text-slate-300 dark:hover:text-white;
+  }
+  .segment-active {
+    @apply text-slate-900 dark:text-white;
+  }
+  .segment-thumb {
+    @apply absolute inset-y-0.5 left-0 rounded-lg bg-white shadow-[0_1px_3px_rgba(0,0,0,0.12),0_1px_1px_rgba(0,0,0,0.04)] ring-[0.5px] ring-black/[0.04] dark:ring-white/[0.06];
+  }
+  .segment-thumb:not([data-fill]) {
+    @apply dark:bg-slate-600;
+  }
+  /* The app's brand as a gradient, from its accent scale. An app with a gradient of its own
+     defines .brand-gradient again in its index.css. */
+  .brand-gradient {
+    background-image: linear-gradient(135deg, theme("colors.brand.400") 0%, theme("colors.brand.500") 45%, theme("colors.brand.700") 100%);
+  }
+}
+
+/* Touch screens (no hover): iOS zooms into any field set under 16px when it's focused, and leaves
+   the page zoomed — so fields are 16px there. And no grey flash on tap: tapped controls show their
+   own pressed state. */
+@media (hover: none) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  select,
+  textarea {
+    font-size: max(16px, 1em) !important;
+  }
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Subtle, unobtrusive scrollbars. */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-slate-300 dark:bg-slate-700;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}

@@ -1,0 +1,31 @@
+# A version tag (v1.2.0) publishes that version: checked, built, packed, and attached to a GitHub
+# Release. Apps install it from the release's download link, which needs no token:
+#   npm i https://github.com/aaarianme/aaarian-ui/releases/download/v1.2.0/aaarianme-ui-1.2.0.tgz
+name: Release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: The tag is package.json's version
+        run: test "v$(node -p 'require("./package.json").version')" = "$GITHUB_REF_NAME"
+      - run: npm ci
+      - run: npm run check
+      - run: npm pack
+      - name: The changelog's entry for this version
+        run: |
+          v="${GITHUB_REF_NAME#v}"
+          awk -v v="$v" '$0 ~ "^## "v" " {on=1; next} /^## / {on=0} on' CHANGELOG.md > notes.md
+      - name: Release it
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" aaarianme-ui-*.tgz --title "$GITHUB_REF_NAME" --notes-file notes.md
