@@ -13,7 +13,8 @@ most complete version of each piece, from whichever app had it:
   Settings, the app switcher, `useUrlState`, the time zone.
 - **Inventory's** segmented control (`Tabs` "native": a raised thumb that slides to the chosen
   segment, dividers between the others, a tab's own colour), its badge colours (navy, forest,
-  black, orange, rust), `SearchInput`'s `inputRef`, and its `DatePicker` (Tix's too).
+  black, orange, rust), `SearchInput`'s `inputRef`, a table row's right-click (`Tr`'s
+  `onContextMenu`), and its `DatePicker` (Tix's too).
 - **ACO's** keyboard focus rings on switches, a dialog's close button and a toast's dismiss.
 - One width scale for `Modal`: sm 24rem, md 32rem, lg 42rem, xl 48rem, 2xl 56rem, 3xl 64rem, 4xl
   72rem — where Tix, ACO and Inventory each had an "xl" of their own.

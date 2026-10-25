@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import type {
+  MouseEvent,
   ReactNode,
   Ref,
   InputHTMLAttributes,
@@ -764,10 +765,22 @@ export function Th({
     </th>
   );
 }
-export function Tr({ children, className, onClick }: { children?: ReactNode; className?: string; onClick?: () => void }) {
+export function Tr({
+  children,
+  className,
+  onClick,
+  onContextMenu,
+}: {
+  children?: ReactNode;
+  className?: string;
+  onClick?: () => void;
+  /** A right-click menu for the row (useContextMenu's `show`). */
+  onContextMenu?: (e: MouseEvent<HTMLTableRowElement>) => void;
+}) {
   return (
     <tr
       onClick={onClick}
+      onContextMenu={onContextMenu}
       className={cn(
         "transition hover:bg-slate-500/[0.04] dark:hover:bg-white/[0.03]",
         onClick && "cursor-pointer",
