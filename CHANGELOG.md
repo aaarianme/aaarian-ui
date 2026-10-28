@@ -3,6 +3,11 @@
 @aaarianme/ui's versions: a minor for something new, a patch for a fix, a major when an app has to
 change to keep working. A tag of the version publishes it (README, "Changing it").
 
+## 1.1.0 — 2026-10-27
+
+- **`Modal` size `5xl`**: 80rem, for a dialog that's a workspace of its own (Inventory's StockX
+  Automations: its automations listed on the left, the one picked beside them).
+
 ## 1.0.0 — 2026-10-25
 
 The kit as its own package, in place of the files `sync-ui.sh` copied into each app — the newest,

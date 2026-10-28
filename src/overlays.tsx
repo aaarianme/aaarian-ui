@@ -34,7 +34,7 @@ import { cn } from "./cn";
 // and the scroll lock is released only when the last modal closes.
 const modalStack: Array<symbol> = [];
 
-export type ModalSize = "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
+export type ModalSize = "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl";
 
 export function Modal({
   open,
@@ -49,7 +49,7 @@ export function Modal({
   title?: ReactNode;
   children: ReactNode;
   footer?: ReactNode;
-  /** Its width: sm 24rem, md 32rem, lg 42rem, xl 48rem, 2xl 56rem, 3xl 64rem, 4xl 72rem (content beside a side panel). */
+  /** Its width: sm 24rem, md 32rem, lg 42rem, xl 48rem, 2xl 56rem, 3xl 64rem, 4xl 72rem (content beside a side panel), 5xl 80rem (a workspace of its own). */
   size?: ModalSize;
 }) {
   // Keep the latest onClose out of the effect deps: re-running the effect on every
@@ -102,6 +102,7 @@ export function Modal({
     "2xl": "sm:max-w-4xl",
     "3xl": "sm:max-w-5xl",
     "4xl": "sm:max-w-6xl",
+    "5xl": "sm:max-w-7xl",
   };
 
   return createPortal(
